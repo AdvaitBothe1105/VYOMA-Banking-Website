@@ -10,8 +10,6 @@ export const userFormSchema = z.object({
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().regex(/^\d{6}$/, "Invalid pincode"),
-  aadharNumber: z.string().regex(/^\d{12}$/, "Invalid Aadhar number"),
-  panNumber: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, "Invalid PAN"),
   accountType: z.string().min(1, "Select an account type"),
   agree: z.literal(true, {
     errorMap: () => ({ message: "You must agree to terms." }),

@@ -4,10 +4,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { userFormSchema } from "../(users)/schema";
+import { useUserStore } from "@/store/userStore"; 
+import { useRouter } from "next/navigation";
+
 
 type FormData = z.infer<typeof userFormSchema>;
 
 const UserInfo = () => {
+  const { setUserData } = useUserStore(); 
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -17,8 +22,10 @@ const UserInfo = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+      console.log("Form data submitted:", data);
+  setUserData(data);
+  router.push("/signIn/register/kyc"); // or wherever your KYC form lives
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#edeae7] p-10">
@@ -44,8 +51,6 @@ const UserInfo = () => {
           { label: "City", id: "city" },
           { label: "State", id: "state" },
           { label: "Pincode", id: "pincode" },
-          { label: "Aadhar Number", id: "aadharNumber" },
-          { label: "PAN Number", id: "panNumber" },
         ].map(({ label, id, type = "text" }) => (
           <div key={id}>
             <label className="block text-sm font-medium text-gray-700">
@@ -103,13 +108,12 @@ const UserInfo = () => {
         {/* Buttons */}
         <button
           type="submit"
-          className="w-full bg-black hover:bg-black text-white py-2 rounded-md shadow"
+          className="w-full bg-black hover:bg-black text-white py-2 rounded-md shadow cursor-pointer"
         >
           Apply Now
         </button>
         <button
           type="button"
-          onClick={() => (window.location.href = "accDeets.html")}
           className="w-full bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-md"
         >
           Back
