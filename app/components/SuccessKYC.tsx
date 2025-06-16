@@ -17,14 +17,14 @@ const SuccessPage = () => {
           KYC Submitted Successfully!
         </h2>
         <p className="text-gray-600 mb-6">
-          Your documents were uploaded and verified. Your unique Customer Reference Number (CRN) is:
+          Your documents were uploaded. Please deposit the Security Amount at the nearest branch to proceed with the services. <br/>Your unique Customer Reference Number (CRN) is:
         </p>
         <div className="bg-gray-100 rounded-lg py-3 px-6 text-xl font-semibold text-gray-800 tracking-wide mb-6">
           {crn ?? "CRN123456789"}
         </div>
         <button
-          onClick={() => router.push("/dashboard")}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium shadow-md transition"
+          onClick={() => router.push("/signIn")}
+          className="bg-[#46494c] hover:bg-[#5b5f63] text-white px-6 py-2 rounded-lg font-medium shadow-md transition cursor-pointer"
         >
           Go to Dashboard
         </button>

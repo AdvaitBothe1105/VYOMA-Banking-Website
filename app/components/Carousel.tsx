@@ -21,7 +21,7 @@ export const HomeCarousel = ({image_src}: Props) => {
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>
-              <Image src={image_src} width={1920} height={200} alt="" className="rounded-3xl" quality={100}/>
+              <Image src={image_src} width={1920} height={1080} alt="" 	style={{objectFit: "contain"}} className="rounded-3xl" quality={100}/>
           </CarouselItem>
         ))}
       </CarouselContent>
