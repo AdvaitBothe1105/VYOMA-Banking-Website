@@ -41,6 +41,12 @@ export async function POST(req: Request) {
   const aadharExt = aadhar.name.split(".").pop();
   const aadharPath = `kyc/${uuidv4()}-aadhar.${aadharExt}`;
 
+  function generateAccountNumber(): string {
+    return "AC" + Math.floor(1000000000 + Math.random() * 9000000000);
+  };
+  const account_number = generateAccountNumber()
+  
+
   const { error: aadharErr } = await supabase.storage
     .from("documents")
     .upload(aadharPath, aadharBuffer, {
@@ -48,12 +54,14 @@ export async function POST(req: Request) {
     });
 
   if (aadharErr) {
-    return NextResponse.json({ error: "Failed to upload Aadhaar" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to upload Aadhaar" },
+      { status: 500 }
+    );
   }
 
-  const aadharUrl = supabase.storage
-    .from("documents")
-    .getPublicUrl(aadharPath).data.publicUrl;
+  const aadharUrl = supabase.storage.from("documents").getPublicUrl(aadharPath)
+    .data.publicUrl;
 
   // Upload PAN
   const panBuffer = Buffer.from(await pan.arrayBuffer());
@@ -67,13 +75,14 @@ export async function POST(req: Request) {
     });
 
   if (panErr) {
-    return NextResponse.json({ error: "Failed to upload PAN" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to upload PAN" },
+      { status: 500 }
+    );
   }
 
-  const panUrl = supabase.storage
-    .from("documents")
-    .getPublicUrl(panPath).data.publicUrl;
-    
+  const panUrl = supabase.storage.from("documents").getPublicUrl(panPath)
+    .data.publicUrl;
 
   // Save to DB
   const user = await prisma.user.create({
@@ -91,9 +100,21 @@ export async function POST(req: Request) {
       aadharUrl,
       panUrl,
       agree,
-      crn
+      crn,
     },
   });
 
-  return NextResponse.json({ message: "User registered", user }, { status: 200 });
+  const accounts = await prisma.account.create({
+    data: {
+      crn,
+      name,
+      account_number,
+      accountType
+    },
+  });
+
+  return NextResponse.json(
+    { message: "User registered", user, accounts },
+    { status: 200 }
+  );
 }

@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     if (res.ok) {
       setStatus("✅ Login successful");
-      router.push("/dashboard"); // Or wherever you want
+      window.location.href = "/dashboard"; // Or wherever you want
     } else {
       setStatus(`❌ ${data.error}`);
     }
@@ -38,8 +38,11 @@ const LoginPage = () => {
         }`}
       >
         {/* Registration Panel */}
-        <div className="w-1/2 flex flex-col justify-center items-center p-12 space-y-6" onSubmit={handleSubmit}>
-          <form className="w-full max-w-sm space-y-4 text-center">
+        <div className="w-1/2 flex flex-col justify-center items-center p-12 space-y-6">
+          <form
+            className="w-full max-w-sm space-y-4 text-center"
+            onSubmit={handleSubmit}
+          >
             <h2 className="text-4xl font-bold text-gray-800">
               Welcome to VYOMA
             </h2>
