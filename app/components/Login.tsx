@@ -122,10 +122,13 @@ const LoginPage = () => {
 
         {/* Toggle Panel */}
         <div
-          className="absolute top-0 left-1/2 w-1/2 h-full bg-gradient-to-br from-black to-[#46494c] text-white flex flex-col justify-center items-center text-center px-10 transition-transform duration-700 transform"
-          style={{
-            transform: isSignUp ? "translateX(-100%)" : "translateX(0)",
-          }}
+          className={`absolute top-0 left-1/2 w-1/2 h-full bg-gradient-to-br from-black to-[#46494c] text-white flex flex-col justify-center items-center text-center px-10 
+    transform transition-all duration-500 ease-in-out
+    ${
+      isSignUp
+        ? "translate-x-[-100%] rounded-r-full"
+        : "translate-x-0 rounded-l-full"
+    }`}
         >
           {isSignUp ? (
             <>
@@ -136,7 +139,7 @@ const LoginPage = () => {
                 Log in to continue banking with VYOMA
               </p>
               <button
-                className="bg-white text-black font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 transition"
+                className="bg-white text-black font-semibold px-6 py-2 rounded-md shadow hover:bg-gray-100 transition "
                 onClick={() => setIsSignUp(false)}
               >
                 Sign In

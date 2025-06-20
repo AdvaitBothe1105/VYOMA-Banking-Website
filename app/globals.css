@@ -154,3 +154,6 @@
                 sans-serif;
   --radius: 0.5rem;
 }
+button{
+  cursor: pointer;
+}
