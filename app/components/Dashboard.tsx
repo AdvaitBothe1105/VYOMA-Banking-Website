@@ -2,6 +2,19 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
+import {
+  FaArrowTrendUp,
+  FaArrowTrendDown,
+  FaEye,
+  FaNewspaper,
+  FaHandHoldingDollar,
+  FaCircleInfo,
+} from "react-icons/fa6";
+import Summary from "./Summary";
+import RecTransaction from "./RecTransaction";
+import LoanInfo from "./LoanInfo";
+import DepositInfo from "./DepositInfo";
+import InvestInfo from "./InvestInfo";
 
 interface DecodedToken {
   userId: string;
@@ -28,25 +41,24 @@ const Dashboard = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold">Welcome to VYOMA Dashboard</h1>
-      {user ? (
-        <p className="mt-2">
-          Logged in as CRN: <strong>{user.crn}</strong>
-        </p>
-      ) : (
-        <p>Loading user info...</p>
-      )}
-      <button
-        onClick={async () => {
-          await fetch("/logout/api", {
-            method: "POST",
-          });
-          router.push("/signIn") // or use router.push if using useRouter
-        }}
-      >
-        {" "}
-        Logout
-      </button>
+      <div className="heading bg-[#D4C8B6] p-4 rounded-lg shadow-md mb-6">
+        <h1 className="text-2xl font-medium w-full text-center">
+          Welcome to VYOMA
+        </h1>
+      </div>
+      <main className="content px-4 py-8 space-y-8 font-raleway">
+        <Summary />
+        <RecTransaction />
+        <section>
+          <LoanInfo />
+        </section>
+        <section>
+          <DepositInfo />
+        </section>
+        <section>
+          <InvestInfo />
+        </section>
+      </main>
     </div>
   );
 };

@@ -149,10 +149,17 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   /* Typography */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  /* --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
                 "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
                 sans-serif;
+   */
+  --font-raleway: var(--font-raleway);
   --radius: 0.5rem;
+}
+
+@theme inline {
+  --font-raleway: var(--font-raleway);
+
 }
 button{
   cursor: pointer;
