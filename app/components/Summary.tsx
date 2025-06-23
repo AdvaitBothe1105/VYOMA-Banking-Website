@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FaArrowTrendUp, FaArrowTrendDown, FaEye } from "react-icons/fa6";
+import { set } from "zod";
 
-const Summary = () => {
+interface Props {
+  crn: string;
+}
+
+const Summary = ({ crn }: Props) => {
   const [showAssets, setShowAssets] = useState(false);
   const [showLiabilities, setShowLiabilities] = useState(false);
+  const [accountData, setAccountData] = useState<any>(null);
+  useEffect(() => {
+    const fetchAccount = async () => {
+      const res = await fetch(`/api/account?crn=${crn}`);
+      const data = await res.json();
+      setAccountData(data);
+    };
+    fetchAccount();
+  }, [crn]);
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -17,7 +32,7 @@ const Summary = () => {
               <div className="flex justify-between">
                 <span>Balance</span>
                 <span className="font-bold text-lg text-primary">
-                  ₹ 1,00,000
+                  {accountData?.balance ? `₹${accountData.balance}` : "N.A"}
                 </span>
               </div>
               <div className="flex justify-between">

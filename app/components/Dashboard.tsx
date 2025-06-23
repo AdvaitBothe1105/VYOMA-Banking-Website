@@ -2,14 +2,6 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
-import {
-  FaArrowTrendUp,
-  FaArrowTrendDown,
-  FaEye,
-  FaNewspaper,
-  FaHandHoldingDollar,
-  FaCircleInfo,
-} from "react-icons/fa6";
 import Summary from "./Summary";
 import RecTransaction from "./RecTransaction";
 import LoanInfo from "./LoanInfo";
@@ -25,6 +17,7 @@ interface DecodedToken {
 
 const Dashboard = () => {
   const [user, setUser] = useState<DecodedToken | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +27,7 @@ const Dashboard = () => {
       if (data.token) {
         const decoded = jwtDecode<DecodedToken>(data.token);
         setUser(decoded);
+        const crn = decoded.crn;
       }
     };
     getToken();
@@ -47,7 +41,7 @@ const Dashboard = () => {
         </h1>
       </div>
       <main className="content px-4 py-8 space-y-8 font-raleway">
-        <Summary />
+        {user?.crn && <Summary crn={user.crn} />} 
         <RecTransaction />
         <section>
           <LoanInfo />

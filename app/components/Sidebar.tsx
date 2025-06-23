@@ -74,7 +74,7 @@ const Sidebar = () => {
 
         <li>
           <Link
-            href="/Services"
+            href="/dashboard"
             className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <LayoutDashboard size={20} /> Home

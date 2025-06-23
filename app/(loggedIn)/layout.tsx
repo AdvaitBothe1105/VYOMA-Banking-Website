@@ -1,5 +1,5 @@
 import Sidebar from "@/app/components/Sidebar";
-import "../../globals.css";
+import "../globals.css";
 import { Metadata } from "next";
 import { Raleway } from "next/font/google";
 
