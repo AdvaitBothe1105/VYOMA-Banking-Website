@@ -19,7 +19,7 @@ const FundLimits:React.FC<MainFundProps> = ({onStepChange}) => {
           <label className="block font-semibold mb-1">Per Day Limit (₹)</label>
           <input
             type="number"
-            className="input input-bordered w-full max-w-xs"
+            className="input w-full max-w-xs p-2 border-black border-2 rounded-lg"
             placeholder="Enter new limit"
           />
           <div className="text-xs mt-1 text-[#4B3F2F]/70">
@@ -32,7 +32,7 @@ const FundLimits:React.FC<MainFundProps> = ({onStepChange}) => {
           </label>
           <input
             type="number"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-xs p-2 border-black border-2 rounded-lg"
             placeholder="Enter new limit"
           />
           <div className="text-xs mt-1 text-[#4B3F2F]/70">
@@ -56,15 +56,18 @@ const FundLimits:React.FC<MainFundProps> = ({onStepChange}) => {
             section
           </li>
         </ul>
-        <button className="btn btn-primary flex items-center gap-2">
-          <FaPenNib /> Update
-        </button>
-        <button
-          className="btn btn-secondary ml-4"
-          onClick={() => onStepChange("main")}
-        >
-          Back
-        </button>
+        <div className="btn-div flex">
+
+          <button className="btn btn-secondary flex items-center gap-2 mt-6 ml-5 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition">
+            <FaPenNib /> Update
+          </button>
+          <button
+            className="btn btn-secondary mt-6 ml-5 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition"
+            onClick={() => onStepChange("main")}
+          >
+            Back
+          </button>
+        </div>
       </div>
     </div>
   );

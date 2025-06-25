@@ -13,7 +13,7 @@ const ManageBeneficiaries: React.FC<MainFundProps> = ({onStepChange}) => {
             </h3>
             <div className="mb-4">No beneficiaries to display.</div>
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary mt-4 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition"
               onClick={() => onStepChange("beneficiaries")}
             >
               Back

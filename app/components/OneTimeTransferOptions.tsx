@@ -1,12 +1,18 @@
 import React from "react";
-import { FaMoneyBillTransfer, FaMoneyCheck, FaUserCheck, FaUserPlus } from "react-icons/fa6";
-
+import {
+  FaMoneyBillTransfer,
+  FaMoneyCheck,
+  FaUserCheck,
+  FaUserPlus,
+} from "react-icons/fa6";
 
 type MainFundProps = {
-  onStepChange: (step: "addBeneficiary" | "beneficiaries" | "limits" | "transfer" | "main") => void;
+  onStepChange: (
+    step: "addBeneficiary" | "beneficiaries" | "limits" | "transfer" | "main"
+  ) => void;
 };
 
-const OneTimeTransferOptions:React.FC<MainFundProps> = ({ onStepChange }) => {
+const OneTimeTransferOptions: React.FC<MainFundProps> = ({ onStepChange }) => {
   return (
     <div>
       <div className="mb-10">
@@ -43,13 +49,15 @@ const OneTimeTransferOptions:React.FC<MainFundProps> = ({ onStepChange }) => {
             <FaMoneyCheck className="text-2xl text-[#A47E3B]" />
             <div className="mt-2 text-center">Send a Demand Draft</div>
           </div>
+          <div className="btn-div flex flex-col justify-center ">
+            <button
+              className="btn btn-secondary mt-4 ml-5 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition"
+              onClick={() => onStepChange("main")}
+            >
+              Back
+            </button>
+          </div>
         </div>
-        <button
-          className="btn btn-secondary mt-4"
-          onClick={() => onStepChange("main")}
-        >
-          Back
-        </button>
       </div>
     </div>
   );

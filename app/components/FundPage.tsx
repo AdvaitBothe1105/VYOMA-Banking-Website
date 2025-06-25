@@ -27,7 +27,7 @@ export default function FundPage() {
       </h1>
 
       {/* Transfer Options */}
-      <div className="functions max-w-5xl mx-auto p-6 bg-[#FAF5EE] rounded-xl shadow-lg border border-[#D4C8B6]">
+      <div className="functions max-w-6xl mx-auto p-6 bg-[#FAF5EE] rounded-xl shadow-lg border border-[#D4C8B6]">
         {step === "main" && <MainFund onStepChange={setStep} />}
 
         {/* One Time Transfer Options */}

@@ -41,10 +41,10 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
   return (
     <div>
       <div className="bg-[#FAF5EE] border border-[#D4C8B6] rounded-xl shadow-lg p-8 mb-10">
-        <h3 className="text-xl font-bold mb-4 text-[#A47E3B]">
+        <h3 className="text-xl font-bold mb-4 text-[#000]">
           One Time Transfer
         </h3>
-        <div className="mb-4">
+        <div className="mb-4 bg-[#D4C8B6] p-6 rounded-lg w-fit">
           <div className="font-semibold text-[#4B3F2F]">From</div>
           <div className="text-sm text-[#4B3F2F]/80">
             Account number:{" "}
@@ -66,7 +66,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
           <div className="mb-4">
             <label className="block font-semibold mb-1">Bank</label>
             <select
-              className="input input-bordered w-full"
+              className="input border-black rounded-lg w-full p-2"
               value={form.bank}
               onChange={(e) => setForm((f) => ({ ...f, bank: e.target.value }))}
               required
@@ -82,7 +82,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
             <label className="block font-semibold mb-1">IFSC Code</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input w-full p-2 border-black rounded-lg"
               value={form.ifsc}
               onChange={(e) => setForm((f) => ({ ...f, ifsc: e.target.value }))}
               placeholder="Enter IFSC code"
@@ -95,7 +95,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
             </label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2 border-black rounded-lg"
               value={form.recipient}
               onChange={(e) => {
                 setForm((f) => ({ ...f, recipient: e.target.value }));
@@ -111,7 +111,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
             </label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2 border-black rounded-lg"
               value={form.confirmRecipient}
               onChange={(e) => {
                 setForm((f) => ({
@@ -135,7 +135,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
             </label>
             <input
               type="number"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2 border-black rounded-lg"
               value={form.amount}
               onChange={(e) =>
                 setForm((f) => ({ ...f, amount: e.target.value }))
@@ -150,7 +150,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
             <label className="block font-semibold mb-1">Remarks</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2 border-black rounded-lg"
               value={form.remarks}
               onChange={(e) =>
                 setForm((f) => ({ ...f, remarks: e.target.value }))
@@ -160,7 +160,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
           </div>
           <button
             type="submit"
-            className={`btn btn-primary w-full mt-2 ${
+            className={`btn btn-secondary mt-6 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition ${
               !isFormValid ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={!isFormValid}
@@ -169,7 +169,7 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange }) => {
           </button>
           <button
             type="button"
-            className="btn btn-secondary w-full mt-2"
+            className="btn btn-secondary mt-6 ml-5 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition"
             onClick={() => onStepChange("oneTime")}
           >
             Back

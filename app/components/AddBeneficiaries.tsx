@@ -22,7 +22,7 @@ const AddBeneficiaries:React.FC<MainFundProps> = ({onStepChange}) => {
             <label className="block font-semibold mb-1">Beneficiary Name</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2"
               placeholder="Enter beneficiary name"
               required
             />
@@ -31,7 +31,7 @@ const AddBeneficiaries:React.FC<MainFundProps> = ({onStepChange}) => {
             <label className="block font-semibold mb-1">Account Number</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2"
               placeholder="Enter account number"
               required
             />
@@ -40,7 +40,7 @@ const AddBeneficiaries:React.FC<MainFundProps> = ({onStepChange}) => {
             <label className="block font-semibold mb-1">Bank Name</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2"
               placeholder="Enter bank name"
               required
             />
@@ -49,17 +49,17 @@ const AddBeneficiaries:React.FC<MainFundProps> = ({onStepChange}) => {
             <label className="block font-semibold mb-1">IFSC Code</label>
             <input
               type="text"
-              className="input input-bordered w-full"
+              className="input input-bordered w-full p-2"
               placeholder="Enter IFSC code"
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary w-full mt-2">
+          <button type="submit" className="btn btn-secondary mt-6 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition">
             Add Beneficiary
           </button>
           <button
             type="button"
-            className="btn btn-secondary w-full mt-2"
+            className="btn btn-secondary mt-6 ml-5 mb-10 px-6 py-2 rounded-lg bg-[#A47E3B] text-white hover:bg-[#8c6a2f] transition"
             onClick={() => onStepChange("beneficiaries")}
           >
             Back
