@@ -20,7 +20,7 @@ model User {
   id            String   @id @default(uuid())
   crn           String   @unique
   name          String
-  email         String   @unique
+  email         String   @unique //TODO: Make this not unique
   password      String
   phone         String
   dob           DateTime
@@ -39,12 +39,27 @@ model User {
 
 model Account {
   account_id     Int     @id @default(autoincrement())
-  crn            String
+  crn            String @unique
   accountType   String
-  account_number String
+  account_number String @unique
+  ifsc_code      String @default("VYOMAIN0000001")
   balance Decimal @default(3000.00)
   name      String
   created_at     DateTime @default(now())
 
   user User @relation(fields: [crn], references: [crn], onDelete: Cascade)
+  transactionsFrom Transaction[] @relation("FromAccount")
+  transactionsTo   Transaction[] @relation("ToAccount")
+}
+
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  fromAccountId   Int
+  toAccountId     Int
+  amount          Decimal
+  remarks         String?
+  createdAt       DateTime @default(now())
+
+  fromAccount     Account  @relation("FromAccount", fields: [fromAccountId], references: [account_id])
+  toAccount       Account  @relation("ToAccount", fields: [toAccountId], references: [account_id])
 }

@@ -42,7 +42,7 @@ const Dashboard = () => {
       </div>
       <main className="content px-4 py-8 space-y-8 font-raleway">
         {user?.crn && <Summary crn={user.crn} />} 
-        <RecTransaction />
+        {user?.crn &&<RecTransaction crn={user.crn} />}
         <section>
           <LoanInfo />
         </section>

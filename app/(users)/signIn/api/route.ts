@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const token = jwt.sign(
       { userId: user.id, crn: user.crn },
       process.env.JWT_SECRET!,
-      { expiresIn: "7d" }
+      { expiresIn: "1h" }
     );
 
     // Create response and set cookie on it
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60, // 1 hour
     });
 
     return res;

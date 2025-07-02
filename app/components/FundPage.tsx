@@ -8,8 +8,11 @@ import FundLimits from "./FundLimits";
 import FundTransfer from "./FundTransfer";
 import RecTransaction from "./RecTransaction";
 
+type FundPageProps = {
+  crn: string;
+};
 
-export default function FundPage() {
+export default function FundPage({ crn }: FundPageProps) {
   const [step, setStep] = useState<
     | "main"
     | "oneTime"
@@ -46,10 +49,10 @@ export default function FundPage() {
         {step === "limits" && <FundLimits onStepChange={setStep} />}
 
         {/* One Time Transfer Form */}
-        {step === "transfer" && <FundTransfer onStepChange={setStep} />}
+        {step === "transfer" && <FundTransfer crn={crn} onStepChange={setStep} />}
 
         {/* Recent Transactions */}
-        <RecTransaction/>
+        <RecTransaction crn={crn}/>
       </div>
     </main>
   );
