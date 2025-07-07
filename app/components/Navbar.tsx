@@ -193,7 +193,7 @@ export const Navbar = () => {
               Sign In
             </Link>
             <Link
-              href="/signup"
+              href="/signIn/register"
               className="bg-[#EDEAE7] text-black px-4 py-2 rounded-lg text-base font-medium"
             >
               Get Started
