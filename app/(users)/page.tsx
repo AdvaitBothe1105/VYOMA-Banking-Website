@@ -4,6 +4,10 @@ import { HomeCarousel } from "../components/Carousel";
 import { CtaSec } from "../components/CtaSec";
 import Features from "../components/Features";
 import { Metadata } from "next";
+import NewsSection from "../components/NewsSection";
+import HomeLoanSection from "../components/HomeLoanSection";
+import { Car } from "lucide-react";
+import CarLoanSection from "../components/CarLoanSection";
 
 export const metadata: Metadata = {
   title: "Vyoma Bank - Modern Digital Banking",
@@ -19,7 +23,10 @@ export default function Home() {
     <div className="bg-white">
       <HomeCarousel image_src='/Ad-1.png'/>
       <CtaSec/>
+      <NewsSection/>
       <Features/>
+      <CarLoanSection/>
+      <HomeLoanSection/>
     </div>
   );
 }

@@ -4,7 +4,7 @@ const Features = () => {
   return (
     <div>
       <div
-        className="bg-[#fff] py-24 sm:py-32 features-section"
+        className="bg-[#edeae7] py-24 sm:py-32 features-section"
         data-anim-target="feat-sec"
         id="features-section"
       >

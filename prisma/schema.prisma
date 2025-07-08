@@ -20,7 +20,7 @@ model User {
   id            String   @id @default(uuid())
   crn           String   @unique
   name          String
-  email         String   @unique //TODO: Make this not unique
+  email         String   
   password      String
   phone         String
   dob           DateTime
