@@ -75,49 +75,49 @@ const Sidebar = () => {
         <li>
           <Link
             href="/dashboard"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <LayoutDashboard size={20} /> Home
+            <LayoutDashboard size={16} /> Home
           </Link>
         </li>
         <li>
           <Link
             href="/fund"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <Banknote size={20} /> Fund Transfer
+            <Banknote size={16} /> Fund Transfer
           </Link>
         </li>
         <li>
           <Link
             href="#"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <ReceiptText size={20} /> Statements
+            <ReceiptText size={16} /> Statements
           </Link>
         </li>
         <li>
           <Link
             href="/coming"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <CreditCard size={20} /> Cards
+            <CreditCard size={16} /> Cards
           </Link>
         </li>
         <li>
           <Link
             href="/Investments"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <TrendingUp size={20} /> Investments
+            <TrendingUp size={16} /> Investments
           </Link>
         </li>
         <li>
           <Link
             href="/coming"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <Home size={20} /> Loans
+            <Home size={16} /> Loans
           </Link>
         </li>
 
@@ -129,9 +129,9 @@ const Sidebar = () => {
         <li>
           <Link
             href="/requests"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <LifeBuoy size={20} /> Service Requests
+            <LifeBuoy size={16} /> Service Requests
           </Link>
         </li>
 
@@ -143,17 +143,17 @@ const Sidebar = () => {
         <li>
           <Link
             href="#"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <User size={20} /> Profile
+            <User size={16} /> Profile
           </Link>
         </li>
         <li>
           <Link
             href="#"
-            className="flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded w-[90%]"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
-            <Settings size={20} /> Settings
+            <Settings size={16} /> Settings
           </Link>
         </li>
         <li>
@@ -167,7 +167,7 @@ const Sidebar = () => {
               router.push("/signIn"); // or use router.push if using useRouter
             }}
           >
-            <LogOut size={20} /> Logout
+            <LogOut size={16} /> Logout
           </button>
         </li>
       </ul>

@@ -32,9 +32,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#edeae7]">
+    <div className=" flex items-center justify-center bg-[#edeae7]">
       <div
-        className={`relative w-full max-w-6xl min-h-[600px] bg-white shadow-xl rounded-3xl overflow-hidden transition-all duration-700 flex ${
+        className={`relative w-full mt-10 mb-10 max-w-6xl min-h-[580px] bg-white shadow-xl rounded-3xl overflow-hidden transition-all duration-700 flex ${
           isSignUp ? "flex-row" : ""
         }`}
       >
