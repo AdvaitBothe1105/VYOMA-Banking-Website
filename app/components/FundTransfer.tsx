@@ -65,8 +65,8 @@ const FundTransfer: React.FC<MainFundProps> = ({ onStepChange, crn }) => {
     });
     const data = await res.json();
     if (data.success) {
-      alert("Transfer successful!");
-      onStepChange("main");
+      router.push("/fund/success");
+      // onStepChange("main");
     } else {
       // setError(data.error || "Transfer failed");
       router.push(`/fund/error?msg=${encodeURIComponent(data.error || "Transfer failed")}`);

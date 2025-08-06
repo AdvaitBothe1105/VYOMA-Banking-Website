@@ -9,8 +9,8 @@ import { FaArrowRightFromBracket } from "react-icons/fa6";
 export const Footer = () => {
   return (
     <div className="text-white bg-[#23242a] text-lg-start flex flex-col ">
-      <div className="container mx-20 px-4 py-10">
-        <div className="flex flex-wrap justify-between gap-8">
+      <div className="container mx-auto px-4 py-10">
+        <div className="flex flex-wrap justify-between gap-8 ml-20">
           {/* About */}
           <section className="w-full md:w-1/2 lg:w-1/3">
             <h2 className="text-xl font-bold uppercase mb-4">About VYOMA</h2>

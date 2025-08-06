@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,22 +12,29 @@ const LoginPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus("🔄 Logging in...");
 
-    const res = await fetch("/signIn/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier, password }),
-    });
+    try {
+      const res = await fetch("/signIn/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, password }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (res.ok) {
-      setStatus("✅ Login successful");
-      window.location.href = "/dashboard"; // Or wherever you want
-    } else {
-      setStatus(`❌ ${data.error}`);
+      if (res.ok) {
+        setStatus("✅ Login successful! Redirecting...");
+        router.push("/dashboard");
+      } else {
+        // Show error from backend
+        setStatus(`❌ ${data.error || "Login failed"}`);
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setStatus("❌ Something went wrong. Please try again later.");
     }
   };
 
@@ -68,6 +75,20 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
             />
+
+            {status && (
+              <p
+                className={`text-sm mt-2 ${
+                  status.startsWith("✅")
+                    ? "text-green-600"
+                    : status.startsWith("🔄")
+                    ? "text-blue-600"
+                    : "text-red-600"
+                }`}
+              >
+                {status}
+              </p>
+            )}
             <button
               type="submit"
               className="w-[10rem] bg-black hover:bg-[#5b5959] text-white py-2 rounded-full shadow cursor-pointer mt-2 mr-4"
@@ -77,6 +98,7 @@ const LoginPage = () => {
             <button
               type="button"
               className="w-[10rem] bg-gray-500 hover:bg-gray-600 text-white py-2 rounded-full cursor-pointer"
+              onClick={() => router.push("/")}
             >
               Back
             </button>
