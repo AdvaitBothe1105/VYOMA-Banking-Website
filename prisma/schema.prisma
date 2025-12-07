@@ -62,4 +62,5 @@ model Transaction {
 
   fromAccount     Account  @relation("FromAccount", fields: [fromAccountId], references: [account_id])
   toAccount       Account  @relation("ToAccount", fields: [toAccountId], references: [account_id])
+  blockchainHash String?
 }

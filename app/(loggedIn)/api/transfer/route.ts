@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { recordHashOnChain, toBytes32Hash, isBlockchainConfigured } from "@/lib/blockchain";
 
 export async function POST(req: NextRequest) {
   try {
@@ -69,7 +70,46 @@ export async function POST(req: NextRequest) {
       });
     });
 
-    return NextResponse.json({ success: true, transaction });
+    let blockchainHash: string | null = null;
+
+    // Record transaction hash on blockchain (if configured)
+    if (isBlockchainConfigured()) {
+      try {
+        const hashInput = JSON.stringify({
+          id: transaction.id,
+          fromAccountId: transaction.fromAccountId,
+          toAccountId: transaction.toAccountId,
+          amount: transaction.amount,
+          remarks: transaction.remarks || "",
+          createdAt: transaction.createdAt.toISOString(),
+        });
+
+        console.log("Hash input:", hashInput);
+
+        const hashBytes32 = toBytes32Hash(hashInput);
+        console.log("Generated hashBytes32:", hashBytes32);
+
+        // Await the blockchain transaction
+        await recordHashOnChain(hashBytes32).catch((error) => {
+          console.error("Blockchain recording failed:", error);
+        });
+
+        blockchainHash = hashBytes32;
+        console.log(`Transaction ${transaction.id} hash recorded on blockchain: ${hashBytes32}`);
+
+        // Update transaction record with blockchain hash
+        await prisma.transaction.update({
+          where: { id: transaction.id },
+          data: { blockchainHash },
+        });
+      } catch (error) {
+        console.error("Error preparing blockchain record:", error);
+      }
+    } else {
+      console.log("Blockchain not configured - skipping hash recording");
+    }
+
+    return NextResponse.json({ success: true, transaction, blockchainHash });
   } catch (err) {
     console.error(err);
     return NextResponse.json(

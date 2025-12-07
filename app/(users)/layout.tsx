@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Raleway} from "next/font/google";
+import { Raleway, Poppins, Libre_Baskerville, IBM_Plex_Mono } from "next/font/google";
 import "../globals.css";
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -9,6 +9,24 @@ import { Footer } from "../components/Footer";
 const raleway = Raleway({
   variable: "--font-raleway",
   subsets: ["latin"],
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const libreBaskerville = Libre_Baskerville({
+  variable: "--font-libre-baskerville",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-raleway antialiased`}
+        className={`font-raleway antialiased ${poppins.variable} ${libreBaskerville.variable} ${ibmPlexMono.variable}`}
       >
         <Navbar />
         {children}
