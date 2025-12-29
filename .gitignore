@@ -41,3 +41,15 @@ yarn-error.log*
 next-env.d.ts
 
 /lib/generated/prisma
+
+# hardhat
+/artifacts
+/cache
+/typechain-types
+
+# IDE
+.vscode/
+
+# local deployment files
+deployed-local.json
+deployed-token-local.json
