@@ -9,15 +9,8 @@ import { jwtDecode } from "jwt-decode";
 import {
   LayoutDashboard,
   Banknote,
-  ReceiptText,
-  CreditCard,
-  TrendingUp,
-  Home,
-  LifeBuoy,
   User,
-  Settings,
   LogOut,
-  Shield,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -28,20 +21,19 @@ interface DecodedToken {
   exp: number;
 }
 
-const Sidebar = () => {
+const AdminSidebar = () => {
   const router = useRouter();
   const [user, setUser] = useState<DecodedToken | null>(null);
   const [userData, setUserData] = useState<{
     name: string;
     accountType: string;
   } | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const crn = user?.crn;
 
   useEffect(() => {
     const getToken = async () => {
-      const res = await fetch("/api/token"); // Create this route below 👇
+      const res = await fetch("/api/token");
       const data = await res.json();
       if (data.token) {
         const decoded = jwtDecode<DecodedToken>(data.token);
@@ -50,11 +42,6 @@ const Sidebar = () => {
         const userRes = await fetch(`/api/user?crn=${decoded.crn}`);
         const userData = await userRes.json();
         setUserData(userData);
-
-        // Check admin status
-        const adminRes = await fetch("/api/admin/check");
-        const adminData = await adminRes.json();
-        setIsAdmin(adminData.isAdmin || false);
       }
     };
     getToken();
@@ -81,7 +68,7 @@ const Sidebar = () => {
 
         <li>
           <Link
-            href="/dashboard"
+            href="/admin"
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <LayoutDashboard size={16} /> Home
@@ -95,69 +82,6 @@ const Sidebar = () => {
             <Banknote size={16} /> Fund Transfer
           </Link>
         </li>
-        <li>
-          <Link
-            href="#"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <ReceiptText size={16} /> Statements
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/coming"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <CreditCard size={16} /> Cards
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/Investments"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <TrendingUp size={16} /> Investments
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/coming"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <Home size={16} /> Loans
-          </Link>
-        </li>
-
-        <h4 className="text-white text-lg font-medium my-2 relative">
-          <span className=" bg-[#edeae7] p-2 rounded-xl text-black">
-            Services
-          </span>
-        </h4>
-        <li>
-          <Link
-            href="/requests"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <LifeBuoy size={16} /> Service Requests
-          </Link>
-        </li>
-        {isAdmin && (
-          <>
-            <h4 className="text-white text-lg font-medium my-2 relative">
-              <span className="bg-[#edeae7] p-2 rounded-xl text-black">
-                Administration
-              </span>
-            </h4>
-            <li>
-              <Link
-                href="/admin"
-                className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-              >
-                <Shield size={16} /> Admin Dashboard
-              </Link>
-            </li>
-          </>
-        )}
 
         <h4 className="text-white text-lg font-medium my-2 relative">
           <span className="bg-[#edeae7] p-2 rounded-xl text-black">
@@ -173,14 +97,6 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link
-            href="#"
-            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
-          >
-            <Settings size={16} /> Settings
-          </Link>
-        </li>
-        <li>
           <button
             id="logout"
             className="w-[90%] text-left flex items-center gap-4 text-white font-medium p-2 hover:bg-white hover:text-black rounded"
@@ -188,7 +104,7 @@ const Sidebar = () => {
               await fetch("/logout/api", {
                 method: "POST",
               });
-              router.push("/signIn"); // or use router.push if using useRouter
+              router.push("/signIn");
             }}
           >
             <LogOut size={16} /> Logout
@@ -240,4 +156,5 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;
+
