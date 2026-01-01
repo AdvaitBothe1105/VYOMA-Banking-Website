@@ -17,7 +17,11 @@ export async function middleware(request: NextRequest) {
   try {
     const { payload } = await jwtVerify(token, secret);
     console.log("✅ Token verified for CRN:", payload.crn);
-    return NextResponse.next();
+    
+    // Add pathname to headers for layout to access
+    const response = NextResponse.next();
+    response.headers.set('x-pathname', request.nextUrl.pathname);
+    return response;
   } catch (error) {
     console.error("❌ Invalid token. Redirecting to /signIn.", error);
     return NextResponse.redirect(new URL("/signIn", request.url));

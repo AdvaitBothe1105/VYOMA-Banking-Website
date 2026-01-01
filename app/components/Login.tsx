@@ -27,7 +27,12 @@ const LoginPage = () => {
 
       if (res.ok) {
         setStatus("✅ Login successful! Redirecting...");
-        router.push("/dashboard");
+        // Redirect admin users to admin panel, regular users to dashboard
+        if (data.isAdmin) {
+          router.push("/admin");
+        } else {
+          router.push("/dashboard");
+        }
       } else {
         // Show error from backend
         setStatus(`❌ ${data.error || "Login failed"}`);

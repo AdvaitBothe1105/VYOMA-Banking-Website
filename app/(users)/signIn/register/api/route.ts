@@ -1,10 +1,11 @@
+export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-import { ethers } from "ethers";
 import crypto from "crypto";
+import { ethers } from "ethers";
 import { mintVyo } from "@/lib/vyomaToken";
 import { fundUserForGas } from "@/lib/gasfunding";
 // Supabase client
@@ -28,7 +29,9 @@ function encryptPrivateKey(pk: string): string {
   const encrypted = Buffer.concat([cipher.update(pk, "utf8"), cipher.final()]);
   const tag = cipher.getAuthTag();
 
-  return `${iv.toString("hex")}:${tag.toString("hex")}:${encrypted.toString("hex")}`;
+  return `${iv.toString("hex")}:${tag.toString("hex")}:${encrypted.toString(
+    "hex"
+  )}`;
 }
 
 export async function POST(req: Request) {
@@ -84,9 +87,8 @@ export async function POST(req: Request) {
       .from("documents")
       .upload(panPath, panBuffer, { contentType: pan.type });
 
-    const panUrl = supabase.storage
-      .from("documents")
-      .getPublicUrl(panPath).data.publicUrl;
+    const panUrl = supabase.storage.from("documents").getPublicUrl(panPath)
+      .data.publicUrl;
 
     // -------------------------
     // STEP 1 — Create custodial wallet
@@ -98,6 +100,13 @@ export async function POST(req: Request) {
     // -------------------------
     // STEP 2 — Create user
     // -------------------------
+
+    const tables = await prisma.$queryRaw`
+  SELECT table_name
+  FROM information_schema.tables
+  WHERE table_schema = 'public'
+`;
+    console.log(tables);
     const user = await prisma.user.create({
       data: {
         name,
@@ -116,7 +125,6 @@ export async function POST(req: Request) {
         crn,
         onchainAddress,
         encryptedPrivateKey,
-        walletStatus: "created",
         kycStatus: "pending",
       },
     });
@@ -156,7 +164,7 @@ export async function POST(req: Request) {
     // STEP 4 — Mint initial VYO
     // -------------------------
     const INITIAL_BALANCE = 5000;
-
+    console.log("MINTED TO:", onchainAddress);
     await mintVyo(onchainAddress, INITIAL_BALANCE);
 
     // -------------------------
@@ -165,14 +173,6 @@ export async function POST(req: Request) {
     await prisma.account.update({
       where: { account_id: account.account_id },
       data: { balance: INITIAL_BALANCE },
-    });
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        walletStatus: "funded",
-        onchainBalance: INITIAL_BALANCE,
-      },
     });
 
     return NextResponse.json(
