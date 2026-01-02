@@ -11,6 +11,7 @@ import {
   Banknote,
   User,
   LogOut,
+  Wallet,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -80,6 +81,14 @@ const AdminSidebar = () => {
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <Banknote size={16} /> Fund Transfer
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/admin/wallet-health"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
+          >
+            <Wallet size={16} /> Wallet Health
           </Link>
         </li>
 
