@@ -65,3 +65,15 @@ model Transaction {
   toAccount      Account @relation("ToAccount", fields: [toAccountId], references: [account_id])
   blockchainHash String?
 }
+
+model ReconciliationLog {
+  id            Int      @id @default(autoincrement())
+  crn           String
+  walletAddress String
+  action        String   // SYNC_FROM_CHAIN | RE_MINT_DEV | SYNC_DB_FROM_CHAIN | SYNC_CHAIN_FROM_DB
+  chainVyo      Decimal
+  dbBalance     Decimal
+  ethBalance    Decimal
+  performedBy   String   // admin CRN or email
+  createdAt     DateTime @default(now())
+}

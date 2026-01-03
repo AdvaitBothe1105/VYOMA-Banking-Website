@@ -10,7 +10,10 @@ import {
   Search,
   Shield,
   Coins,
-  Zap
+  Zap,
+  RefreshCw,
+  Database,
+  Link
 } from "lucide-react";
 import { Metadata } from "next";
 
@@ -34,6 +37,11 @@ const WalletHealthPage = () => {
   const [loading, setLoading] = useState(false);
   const [healthData, setHealthData] = useState<WalletHealthResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [resyncLoading, setResyncLoading] = useState(false);
+  const [resyncAction, setResyncAction] = useState<"SYNC_FROM_CHAIN" | "SYNC_FROM_DB" | null>(null);
+  const [resyncResult, setResyncResult] = useState<any>(null);
+  const [logs, setLogs] = useState<any[]>([]);
+  const [showLogs, setShowLogs] = useState(false);
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,10 +64,73 @@ const WalletHealthPage = () => {
       }
 
       setHealthData(data);
+      // Fetch reconciliation logs
+      fetchLogs();
     } catch (err: any) {
       setError(err.message || "An error occurred while checking wallet health");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResync = async (action: "SYNC_FROM_CHAIN" | "SYNC_FROM_DB") => {
+    if (!crn.trim() || !healthData) return;
+
+    setResyncLoading(true);
+    setResyncAction(action);
+    setResyncResult(null);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/admin/resync", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          crn: crn.trim(),
+          action,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Resync failed");
+        return;
+      }
+
+      setResyncResult(data);
+
+      // Refresh health data after resync
+      const healthResponse = await fetch(`/api/admin/wallet-health?crn=${encodeURIComponent(crn.trim())}`);
+      const healthData = await healthResponse.json();
+      if (healthResponse.ok) {
+        setHealthData(healthData);
+      }
+
+      // Refresh logs after resync
+      fetchLogs();
+    } catch (err: any) {
+      setError(err.message || "An error occurred during resync");
+    } finally {
+      setResyncLoading(false);
+      setResyncAction(null);
+    }
+  };
+
+  const fetchLogs = async () => {
+    if (!crn.trim()) return;
+
+    try {
+      const response = await fetch(`/api/admin/reconciliation-logs?crn=${encodeURIComponent(crn.trim())}&limit=10`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setLogs(data.logs);
+      }
+    } catch (err: any) {
+      console.error("Failed to fetch logs:", err);
     }
   };
 
@@ -245,6 +316,91 @@ const WalletHealthPage = () => {
             </div>
           </div>
 
+          {/* Admin Resync Actions */}
+          {healthData.status === "UNHEALTHY" && (
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <RefreshCw className="w-5 h-5" />
+                Admin Resync Actions
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Use these actions to resolve wallet health issues. All actions are logged for audit purposes.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 border border-blue-200 rounded-lg bg-blue-50">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Link className="w-5 h-5 text-blue-600" />
+                    <h4 className="font-semibold text-blue-900">Sync from Blockchain</h4>
+                  </div>
+                  <p className="text-sm text-blue-800 mb-3">
+                    Update database balance to match on-chain VYO balance. Use when blockchain has the correct state.
+                  </p>
+                  <button
+                    onClick={() => handleResync("SYNC_FROM_CHAIN")}
+                    disabled={resyncLoading}
+                    className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
+                  >
+                    {resyncLoading && resyncAction === "SYNC_FROM_CHAIN" ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Syncing...
+                      </>
+                    ) : (
+                      <>
+                        <Database className="w-4 h-4" />
+                        Sync DB ← Chain
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <div className="p-4 border border-orange-200 rounded-lg bg-orange-50">
+                  <div className="flex items-center gap-3 mb-3">
+                    <RefreshCw className="w-5 h-5 text-orange-600" />
+                    <h4 className="font-semibold text-orange-900">Re-mint from Database</h4>
+                  </div>
+                  <p className="text-sm text-orange-800 mb-3">
+                    Mint VYO tokens on-chain to match database balance. <strong>Dev Only</strong> - recovers from Hardhat resets.
+                  </p>
+                  <button
+                    onClick={() => handleResync("SYNC_FROM_DB")}
+                    disabled={resyncLoading}
+                    className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
+                  >
+                    {resyncLoading && resyncAction === "SYNC_FROM_DB" ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Minting...
+                      </>
+                    ) : (
+                      <>
+                        <Coins className="w-4 h-4" />
+                        Mint VYO ← DB
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Resync Result */}
+              {resyncResult && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <h4 className="font-semibold text-green-900">Resync Completed</h4>
+                  </div>
+                  <p className="text-green-800 text-sm">{resyncResult.message}</p>
+                  <div className="mt-2 text-sm text-green-700">
+                    <p>Action: {resyncResult.action}</p>
+                    <p>Updated ETH: {resyncResult.balances.eth.toFixed(4)} ETH</p>
+                    <p>Updated VYO: {resyncResult.balances.vyo.toLocaleString()} VYO</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Recommendations */}
           {healthData.status === "UNHEALTHY" && (
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -266,6 +422,71 @@ const WalletHealthPage = () => {
                   <li>• Cannot read VYO balance. Check blockchain connection and token contract.</li>
                 )}
               </ul>
+            </div>
+          )}
+
+          {/* Reconciliation Logs */}
+          {logs.length > 0 && (
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                  <Shield className="w-5 h-5" />
+                  Reconciliation Logs (Audit Trail)
+                </h3>
+                <button
+                  onClick={() => setShowLogs(!showLogs)}
+                  className="text-sm text-blue-600 hover:text-blue-800"
+                >
+                  {showLogs ? "Hide" : "Show"} Logs
+                </button>
+              </div>
+
+              {showLogs && (
+                <div className="overflow-x-auto">
+                  <table className="min-w-full table-auto">
+                    <thead>
+                      <tr className="bg-gray-50">
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Chain VYO</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">DB Balance</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">ETH Balance</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Admin</th>
+                        <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {logs.map((log) => (
+                        <tr key={log.id} className="hover:bg-gray-50">
+                          <td className="px-4 py-2 text-sm text-gray-900">
+                            <span className={`px-2 py-1 text-xs rounded-full ${
+                              log.action === "SYNC_FROM_CHAIN"
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-orange-100 text-orange-800"
+                            }`}>
+                              {log.action === "SYNC_FROM_CHAIN" ? "DB ← Chain" : "Mint ← DB"}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2 text-sm text-gray-900">
+                            {parseFloat(log.chainVyo).toLocaleString()} VYO
+                          </td>
+                          <td className="px-4 py-2 text-sm text-gray-900">
+                            {parseFloat(log.dbBalance).toLocaleString()} VYO
+                          </td>
+                          <td className="px-4 py-2 text-sm text-gray-900">
+                            {parseFloat(log.ethBalance).toFixed(4)} ETH
+                          </td>
+                          <td className="px-4 py-2 text-sm text-gray-900">
+                            {log.performedBy}
+                          </td>
+                          <td className="px-4 py-2 text-sm text-gray-500">
+                            {new Date(log.createdAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           )}
         </div>
