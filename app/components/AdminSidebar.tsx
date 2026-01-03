@@ -91,6 +91,14 @@ const AdminSidebar = () => {
             <Wallet size={16} /> Wallet Health
           </Link>
         </li>
+        <li>
+          <Link
+            href="/admin/kyc"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
+          >
+            <Wallet size={16} /> KYC Verification
+          </Link>
+        </li>
 
         <h4 className="text-white text-lg font-medium my-2 relative">
           <span className="bg-[#edeae7] p-2 rounded-xl text-black">

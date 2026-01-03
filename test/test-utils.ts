@@ -129,7 +129,7 @@ export async function createTestUser(options?: {
   const accountType = options?.accountType || "Savings";
   const initialBalance = options?.initialBalance ?? 5000;
   const isAdmin = options?.isAdmin || false;
-  const kycStatus = options?.kycStatus || "verified";
+  const kycStatus = options?.kycStatus || "pending";
 
   // Create blockchain wallet
   const wallet = ethers.Wallet.createRandom();
@@ -394,13 +394,46 @@ export async function performTestTransfer(
  * @param crns - Array of CRNs to delete
  */
 export async function cleanupTestData(crns: string[]) {
+  // Safety guard
   for (const crn of crns) {
-    // Accounts are deleted via cascade
-    await prisma.user.delete({
-      where: { crn },
-    });
+    if (!crn.startsWith("TEST")) {
+      throw new Error(`Refusing to delete non-test CRN: ${crn}`);
+    }
   }
+
+  await prisma.$transaction(async (tx) => {
+    // 1. Find accounts for these users
+    const accounts = await tx.account.findMany({
+      where: { crn: { in: crns } },
+      select: { account_id: true },
+    });
+
+    const accountIds = accounts.map(a => a.account_id);
+
+    if (accountIds.length > 0) {
+      // 2. Delete transactions (both directions)
+      await tx.transaction.deleteMany({
+        where: {
+          OR: [
+            { fromAccountId: { in: accountIds } },
+            { toAccountId: { in: accountIds } },
+          ],
+        },
+      });
+
+      // 3. Delete accounts
+      await tx.account.deleteMany({
+        where: { account_id: { in: accountIds } },
+      });
+    }
+
+    // 4. Delete users
+    await tx.user.deleteMany({
+      where: { crn: { in: crns } },
+    });
+  });
 }
+
 
 /**
  * Get account details by CRN
