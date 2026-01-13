@@ -1,255 +1,356 @@
-# Vyoma Bank – Modern Digital Banking Platform
+# 🏦 Vyoma Bank
 
-Vyoma Bank is a full-stack digital banking platform built with **Next.js 14 (App Router)**, **TypeScript**, **Prisma ORM**, and **Supabase/PostgreSQL**.  
-It offers a seamless, secure, and modern banking experience with features like digital onboarding, fund transfers, loan management, investments, and more.
+**Hybrid Digital Banking Platform with Blockchain-Backed Settlement**
 
----
+Vyoma Bank is a **research-driven, full-stack digital banking platform** that combines traditional account-based banking with **blockchain-backed settlement and auditability** using a **custodial ERC-20 token model**.
 
-## 🚀 Features
-
-### 🏦 Account & Onboarding
-- **User Registration & KYC:**  
-  - Multi-step registration with online KYC (Aadhaar & PAN upload).
-  - Unique CRN (Customer Reference Number) generation.
-- **Secure Login:**  
-  - Sign in with CRN or Card Number.
-  - Password-based authentication.
-- **Auth:** Custom authentication using JWT tokens (stateless, secure API access)
-
-### 💸 Banking Operations
-- **Account Dashboard:**  
-  - View account summary, assets, and liabilities.
-  - Recent transactions with download statement option.
-- **Fund Transfer:**  
-  - Transfer funds to any account.
-  - Add/manage beneficiaries.
-  - One-time transfers and transfer limits.
-- **Transaction History:**  
-  - View and filter recent transactions.
-
-### 📰 News & Insights
-- **Market Sentiment News Carousel:**  
-  - Live financial news with sentiment analysis and ticker highlights, powered by AlphaVantage API.
-
-### 🏠 Loans
-- **Home Loans:**  
-  - Dedicated section with features, benefits, and application CTA.
-- **Car Loans:**  
-  - Dedicated section with features, benefits, and application CTA.
-- **Personal Loans:**  
-  - Quick approval, competitive rates.
-
-### 📈 Investments
-- **Mutual Funds:**  
-  - Explore and apply for mutual funds.
-- **Demat Account:**  
-  - Open and manage demat account for stocks and securities.
-
-### 🌟 Digital Banking Features
-- **Minimal minimum Balance Account**
-- **Virtual Debit Card**
-- **24/7 Account Management**
-- **No/Minimal Fees**
-- **Seamless IMPS/NEFT/RTGS/UPI Transfers**
-
-### 📰 News & Insights
-- **Market Sentiment News Carousel:**  
-  - Live news with sentiment analysis and ticker highlights.
-
-### 🔒 Security
-- **Multi-factor Authentication**
-- **Secure document upload**
-- **Data encryption and privacy**
-
-### 📱 Responsive UI
-- **Modern, mobile-friendly design**
-- **Animated carousels, and more**
+Unlike wallet-first crypto applications, Vyoma preserves a **familiar banking UX** (accounts, balances, transfers) while leveraging blockchain only where it adds **real technical value**:
+**settlement, ownership enforcement, auditability, and verification**.
 
 ---
 
-## 🗂️ Project Structure
+## 📌 Key Design Philosophy
+
+> **Blockchain where trust must be removed.
+> Centralization where accountability is required.**
+
+Vyoma is **not a DeFi app** and **not a DAO**.
+It is a **hybrid banking architecture** designed for realism, compliance, and academic research.
+
+---
+
+## ✨ Core Highlights
+
+* Custodial blockchain wallet per user (server-managed)
+* ERC-20 token–based settlement (VyomaToken / VYO)
+* Blockchain as **source of truth for balances**
+* Database as **banking ledger mirror**
+* Immutable on-chain audit trails
+* Privacy-preserving KYC verification on blockchain
+* Gas abstraction (users never manage ETH)
+* Designed for scalability, safety, and compliance
+
+---
+
+## 🛠 Technology Stack
+
+### Frontend
+
+* **Next.js 15 (App Router)**
+* **React 19**
+* **TypeScript**
+* Tailwind CSS
+* Zustand (state management)
+* React Hook Form + Zod (validation)
+
+### Backend
+
+* Next.js API Routes
+* Prisma ORM
+* PostgreSQL
+* JWT authentication (HTTP-only cookies)
+* bcrypt password hashing
+
+### Blockchain Layer
+
+* Solidity `0.8.20`
+* Hardhat (local blockchain simulation)
+* Ethers.js v6
+* ERC-20 standard (VyomaToken)
+* Custom audit & KYC contracts
+
+### External Services
+
+* Supabase Storage (KYC documents)
+* Alpha Vantage API (financial news & sentiment)
+
+---
+
+## 🧱 System Architecture (High-Level)
 
 ```
-vyoma/
-├── app/
-│   ├── (users)/
-│   │   ├── page.tsx           # Landing page
-│   │   ├── signIn/            # Login & registration
-│   │   ├── loans/             # Loans pages
-│   │   └── ...                # Other user routes
-│   ├── (loggedIn)/
-│   │   ├── dashboard/         # User dashboard
-│   │   ├── fund/              # Fund transfer
-│   │   └── ...                # Authenticated routes
-│   ├── components/
-│   │   ├── Navbar.tsx
-│   │   ├── Footer.tsx
-│   │   ├── Sidebar.tsx
-│   │   ├── Features.tsx
-│   │   ├── CtaSec.tsx
-│   │   ├── NewsSection.tsx
-│   │   ├── HomeLoanSection.tsx
-│   │   ├── CarLoanSection.tsx
-│   │   ├── Login.tsx
-│   │   ├── UserInfo.tsx
-│   │   ├── OnlineKYC.tsx
-│   │   ├── Dashboard.tsx
-│   │   ├── FundPage.tsx
-│   │   ├── MainFund.tsx
-│   │   ├── RecTransaction.tsx
-│   │   ├── InvestInfo.tsx
-│   │   └── ... (other UI components)
-│   ├── globals.css
-│   └── ...
-├── prisma/
-│   ├── schema.prisma
-│   └── migrations/
-├── lib/
-│   ├── prisma.ts
-│   ├── supabaseClient.ts
-│   └── generated/prisma/
-├── public/
-│   ├── Logo.png
-│   ├── Assets/
-│   └── ...
-├── next.config.ts
-├── package.json
-└── README.md
+Frontend (Next.js)
+        ↓
+Backend APIs (Next.js)
+        ↓
+PostgreSQL (Prisma ORM)
+        ↓
+Blockchain (Hardhat / Sepolia)
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🔐 Authentication & User Management
 
-- **Frontend:** Next.js 14 (App Router), React, Tailwind CSS
-- **Backend:** Next.js API routes, Prisma ORM
-- **Database:** Supabase (PostgreSQL)
-- **Auth:** Custom (with CRN/Card Number), JWT
-- **File Storage:** Supabase Storage (for KYC docs)
-- **APIs:** AlphaVantage (for news), others as needed
+* Secure user registration & login
+* JWT-based authentication
+* HTTP-only cookies
+* Middleware-protected routes
+* Role-based access (user / admin)
 
 ---
 
-## 🏁 Getting Started
+## 👤 User Registration & Custodial Wallet Creation
 
-### 1. **Clone the Repo**
-```sh
-git clone https://github.com/AdvaitBothe1105/VYOMA-Banking-Website.git
-cd vyoma
+During registration:
+
+1. User submits personal details + KYC documents
+2. Backend generates a **blockchain wallet**
+3. Wallet private key is **AES-256-GCM encrypted**
+4. Wallet address stored in database
+5. User never sees or manages the wallet
+6. Initial VYO tokens minted
+7. ETH funded for gas (custodial abstraction)
+8. Bank account created separately
+
+This mirrors **real-world bank & exchange custody models**.
+
+---
+
+## 🏦 Account-Based Banking Model
+
+* Each user may have **multiple bank accounts**
+* All accounts map to **one custodial wallet**
+* Account balances represent **internal banking segregation**
+* Wallet balance represents **total on-chain ownership**
+
+This allows:
+
+* Savings / Current / DEMAT separation
+* Traditional banking UX
+* Blockchain-backed settlement
+
+---
+
+## 💸 ERC-20 Based Fund Transfers
+
+All fund transfers follow this strict flow:
+
+1. Validate banking rules (limits, minimum balance)
+2. Check **on-chain VYO balance** (source of truth)
+3. Verify ETH gas availability
+4. Execute ERC-20 transfer on blockchain
+5. Update database **after chain success**
+6. Optionally anchor audit hash on-chain (non-blocking)
+
+### Key Properties
+
+* Blockchain-enforced settlement
+* No double-spending
+* DB updates only after successful settlement
+* Audit layer failures never block transfers
+
+---
+
+## 📜 Transaction Management & Auditability
+
+Each transaction records:
+
+* Sender & receiver accounts
+* Amount & metadata
+* ERC-20 transaction hash
+* Optional audit hash
+
+### Audit Anchoring (TxHashStore)
+
+* Stores transaction fingerprints on-chain
+* Enables independent verification
+* Non-blocking & best-effort
+* Failure-tolerant by design
+
+---
+
+## 🪙 VyomaToken (VYO)
+
+### What It Is
+
+* ERC-20 compliant token
+* Minted only by Vyoma Bank (owner)
+* Used exclusively for internal settlement
+
+### What It Is Not
+
+* Not a speculative cryptocurrency
+* Not publicly tradable
+* Not user-managed
+
+### Why It Exists
+
+1. **On-chain settlement**
+2. **Cryptographic ownership enforcement**
+3. **Auditability & immutability**
+4. **Future extensibility (DeFi, governance, loans)**
+
+---
+
+## 🧾 KYC Architecture (Privacy-Preserving)
+
+### Off-Chain
+
+* Aadhaar & PAN stored securely in Supabase
+* Documents never stored on-chain
+
+### On-Chain (KYCRegistry)
+
+* Cryptographic hash of KYC metadata
+* Wallet address
+* Verifier address
+* Timestamp
+
+### Database
+
+* Stores only KYC status (`pending | verified`)
+* Used for UI gating & access control
+
+### Key Guarantees
+
+* ❌ No PII on-chain
+* ✅ Immutable verification proof
+* ✅ Verifier accountability
+* ✅ Audit-ready compliance model
+
+---
+
+## 🛡 Security Features
+
+| Layer          | Protection              |
+| -------------- | ----------------------- |
+| Wallet custody | Encrypted private keys  |
+| Authentication | JWT + HTTP-only cookies |
+| Passwords      | bcrypt hashing          |
+| Transfers      | Blockchain-enforced     |
+| DB consistency | Read-after-write        |
+| Audit          | Immutable hashes        |
+| Gas            | Custodial abstraction   |
+| Access         | Role-based control      |
+
+---
+
+## 🗄 Database Schema (Simplified)
+
+### User
+
+* Identity & KYC metadata
+* Blockchain wallet reference
+* Encrypted private key
+* Admin role flag
+
+### Account
+
+* Banking ledger (authoritative UX layer)
+* IFSC, account number, balance
+
+### Transaction
+
+* Transfer metadata
+* Blockchain transaction hash
+* Optional audit hash
+
+---
+
+## 📰 Financial News & Market Sentiment
+
+* Integrated Alpha Vantage API
+* Real-time financial news
+* Sentiment analysis (bullish / bearish / neutral)
+* Responsive UI carousel
+
+---
+
+## 🔧 Environment Variables
+
+### Required
+
+```env
+DATABASE_URL=
+DIRECT_URL=
+JWT_SECRET=
+NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+ALPHA_VANTAGE_KEY=
+MASTER_WALLET_ENCRYPTION_KEY=
 ```
 
-### 2. **Install Dependencies**
-```sh
+### Blockchain (Local / Optional Testnet)
+
+```env
+LOCAL_RPC_URL=http://127.0.0.1:8545
+SEPOLIA_RPC_URL=
+WALLET_PRIVATE_KEY=
+VYO_TOKEN_ADDRESS=
+TX_HASH_STORE_ADDRESS=
+KYC_REGISTRY_ADDRESS=
+```
+
+---
+
+## 🚀 Development Commands
+
+```bash
 npm install
-```
+npm run dev          # Start dev server
+npm run build        # Production build
+npm start            # Start prod server
 
-### 3. **Configure Environment Variables**
+npx prisma migrate dev
+npx prisma studio
 
-Create a `.env` file in the root:
-
-```
-DATABASE_URL=postgresql://<your-supabase-connection-string>
-ALPHA_VANTAGE_KEY=your_alpha_vantage_api_key
-JWT_SECRET=your_jwt_secret
-```
-
-### 4. **Push Prisma Schema**
-```sh
-npx prisma generate
-npx prisma db push
-```
-
-### 5. **Run Locally**
-```sh
-npm run dev
-```
-App will be available at [http://localhost:3000](http://localhost:3000)
-
----
-
-### **Database**
-- Uses Supabase (PostgreSQL) – free tier is sufficient for development and small projects.
-
----
-
-## 📚 Key Components & Pages
-
-- **`/components/Navbar.tsx`** – Responsive navigation bar with logo and auth buttons.
-- **`/components/Footer.tsx`** – Informative footer with contact and quick links.
-- **`/components/Dashboard.tsx`** – User dashboard with summary, transactions, loans, deposits, investments.
-- **`/components/FundPage.tsx`** – Fund transfer, beneficiaries, limits, and one-time transfers.
-- **`/components/NewsSection.tsx`** – Market news carousel with sentiment badges.
-- **`/components/Features.tsx`** – Feature highlights for savings account.
-- **`/components/CtaSec.tsx`** – Call-to-action section with feature icons.
-- **`/components/HomeLoanSection.tsx`** – Home loan info and features.
-- **`/components/CarLoanSection.tsx`** – Car loan info and features.
-- **`/components/Login.tsx`** – Login and registration UI.
-- **`/components/UserInfo.tsx`** – User info collection for onboarding.
-- **`/components/OnlineKYC.tsx`** – Online KYC document upload.
-
----
-
-## 📝 Prisma Schema (Key Models)
-
-```prisma
-model User {
-  id            String   @id @default(uuid())
-  crn           String   @unique
-  name          String
-  email         String   
-  password      String
-  phone         String
-  dob           DateTime
-  address       String
-  city          String
-  state         String
-  pincode       String
-  aadharUrl     String
-  panUrl        String
-  accountType   String
-  agree         Boolean
-  createdAt     DateTime @default(now())
-  accounts      Account[]
-}
-
-model Account {
-  account_id     Int     @id @default(autoincrement())
-  crn            String @unique
-  accountType    String
-  account_number String @unique
-  ifsc_code      String @default("VYOMAIN0000001")
-  balance        Decimal @default(3000.00)
-  name           String
-  created_at     DateTime @default(now())
-  user           User @relation(fields: [crn], references: [crn], onDelete: Cascade)
-  transactionsFrom Transaction[] @relation("FromAccount")
-  transactionsTo   Transaction[] @relation("ToAccount")
-}
-
-model Transaction {
-  id              Int      @id @default(autoincrement())
-  fromAccountId   Int
-  toAccountId     Int
-  amount          Decimal
-  remarks         String?
-  createdAt       DateTime @default(now())
-  fromAccount     Account  @relation("FromAccount", fields: [fromAccountId], references: [account_id])
-  toAccount       Account  @relation("ToAccount", fields: [toAccountId], references: [account_id])
-}
+npx hardhat node
+npx hardhat compile
+npx hardhat run scripts/deploy-*.js --network localhost
 ```
 
 ---
 
-## 🧑‍💻 Contributing
+## 🧪 Testing & Reliability
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+* Deterministic local blockchain (Hardhat)
+* Mock users & wallets
+* Failure-tolerant blockchain writes
+* Admin resync & reconciliation tools
+* Wallet health checks
+
+---
+
+## 🎓 Academic & R&D Value
+
+Vyoma demonstrates:
+
+* Selective decentralization
+* Hybrid trust architecture
+* Practical blockchain integration
+* Compliance-aware system design
+* Realistic banking workflows
+
+This makes it suitable for:
+
+* University research projects
+* Architecture studies
+* Blockchain systems evaluation
+* Fintech experimentation
+
+---
+
+## 🔮 Future Scope (Not Implemented Yet)
+
+* Loan advisory voting system
+* Risk scoring engines
+* DAO simulations (research only)
+* Advanced reconciliation
+* Cross-chain settlement experiments
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is developed for **educational & research purposes**.
 
 ---
 
-**Vyoma Bank – Secure. Fast. Modern. Your digital banking, reimagined.**
+### ✨ Final Note
+
+> Vyoma is not “blockchain for the sake of blockchain.”
+> It is **engineering-driven decentralization**, applied where it matters.
+
+---
