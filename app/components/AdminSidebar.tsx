@@ -12,6 +12,7 @@ import {
   User,
   LogOut,
   Wallet,
+  FileText,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -77,7 +78,7 @@ const AdminSidebar = () => {
         </li>
         <li>
           <Link
-            href="/fund"
+            href="/dashboard/fund"
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <Banknote size={16} /> Fund Transfer
@@ -97,6 +98,14 @@ const AdminSidebar = () => {
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <Wallet size={16} /> KYC Verification
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="/admin/loans"
+            className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
+          >
+            <FileText size={16} /> Loan Approval
           </Link>
         </li>
 

@@ -1,6 +1,8 @@
 import Sidebar from "@/app/components/Sidebar";
 import AdminSidebar from "@/app/components/AdminSidebar";
-import "../globals.css";
+import { ToastProvider } from "@/app/components/toast/ToastContext";
+import { ToastContainer } from "@/app/components/toast/ToastContainer";
+import "@/app/globals.css";
 import { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { cookies } from "next/headers";
@@ -61,7 +63,10 @@ export default async function DashboardLayout({
     return (
       <html lang="en" className={raleway.variable}>
         <body className={`font-raleway antialiased flex min-h-screen bg-gray-50`}>
-          {children}
+          <ToastProvider>
+            {children}
+            <ToastContainer />
+          </ToastProvider>
         </body>
       </html>
     );
@@ -70,12 +75,15 @@ export default async function DashboardLayout({
   return (
     <html lang="en" className={raleway.variable}>
       <body className={`font-raleway antialiased flex min-h-screen ${isAdmin ? 'bg-gray-50' : ''}`}>
-        <aside className="w-64 bg-gray-100 shadow-lg">
-          {isAdmin ? <AdminSidebar /> : <Sidebar />}
-        </aside>
-        <main className="flex-1 p-6">
-          {children}
-        </main>
+        <ToastProvider>
+          <aside className="w-64 bg-gray-100 shadow-lg">
+            {isAdmin ? <AdminSidebar /> : <Sidebar />}
+          </aside>
+          <main className="flex-1 p-6">
+            {children}
+          </main>
+          <ToastContainer />
+        </ToastProvider>
       </body>
     </html>
   )

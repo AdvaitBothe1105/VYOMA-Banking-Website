@@ -128,6 +128,17 @@ export async function POST(req: Request) {
         kycStatus: "pending",
       },
     });
+    await prisma.reputation.create({
+      data: {
+        crn: user.crn,
+        score: 300, // neutral baseline
+      },
+    });
+
+    console.log("[register] Reputation initialized", {
+      crn: user.crn,
+      score: 300,
+    });
 
     // -------------------------
     // STEP 3 — Create account

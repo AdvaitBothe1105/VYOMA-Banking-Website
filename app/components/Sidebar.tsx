@@ -89,7 +89,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
-            href="/fund"
+            href="/dashboard/fund"
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <Banknote size={16} /> Fund Transfer
@@ -121,7 +121,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
-            href="/coming"
+            href="/dashboard/loans"
             className="flex items-center gap-3 text-white text-md font-medium px-2 py-1 hover:bg-white hover:text-black rounded w-[90%]"
           >
             <Home size={16} /> Loans

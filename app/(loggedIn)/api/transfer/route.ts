@@ -103,6 +103,8 @@ export async function POST(req: NextRequest) {
     // -------------------------
     // 3. Execute blockchain transfer
     // -------------------------
+    
+    // TODO: Ensure KYC is verified before allowing transfer
     if (!fromAccount.user.encryptedPrivateKey) {
       throw new Error("Sender wallet private key missing");
     }
