@@ -32,7 +32,7 @@ const features = [
 
 export const CtaSec = () => {
   return (
-    <div className="overflow-hidden bg-[#edeae7] py-24 sm:py-32">
+    <div className="relative overflow-hidden bg-[#edeae7] pt-24 pb-32 sm:pt-32 sm:pb-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div className="lg:pt-4 lg:pr-8">
@@ -59,6 +59,12 @@ export const CtaSec = () => {
           </div>
           <Image src="/Ser.png" width={2432} height={1462} alt="" className="w-4xl h-[30rem] mt-10 max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-228 md:-ml-4 lg:-ml-0"/>
         </div>
+      </div>
+      {/* Bottom wave divider */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto" preserveAspectRatio="none">
+          <path d="M0 60L48 55C96 50 192 40 288 35C384 30 480 30 576 33.3C672 36.7 768 43.3 864 45C960 46.7 1056 43.3 1152 40C1248 36.7 1344 33.3 1392 31.7L1440 30V60H1392C1344 60 1248 60 1152 60C1056 60 960 60 864 60C768 60 672 60 576 60C480 60 384 60 288 60C192 60 96 60 48 60H0Z" fill="#ffffff" />
+        </svg>
       </div>
     </div>
   );

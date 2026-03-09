@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthUser } from "@/lib/auth";
 import { settleReputationAfterDecision } from "@/lib/reputationSettlement";
+import { recordLoanDecisionOnChain } from "@/lib/loanApprovalChain";
 
 const INTEREST_RATE_RANGES: Record<string, { min: number; max: number }> = {
   A: { min: 8, max: 10 },
@@ -84,6 +85,11 @@ export async function POST(
       // STEP 6: Settle reputation after decision
       await settleReputationAfterDecision(Number(loanId), "approved");
 
+      // 🔐 Immutable audit record (non-blocking)
+      recordLoanDecisionOnChain(Number(loanId), true).catch((e) => {
+        console.warn("On-chain audit log failed, continuing", e);
+      });
+
       return NextResponse.json({
         success: true,
         message: "Loan approved successfully",
@@ -100,6 +106,11 @@ export async function POST(
 
       // STEP 6: Settle reputation after decision
       await settleReputationAfterDecision(Number(loanId), "rejected");
+
+      // 🔐 Immutable audit record (non-blocking)
+      recordLoanDecisionOnChain(Number(loanId), false).catch((e) => {
+        console.warn("On-chain audit log failed, continuing", e);
+      });
 
       return NextResponse.json({
         success: true,

@@ -124,9 +124,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (amount <= 0 || tenureMonths <= 0) {
+    // Validate amount and tenure are positive
+    const parsedAmount = parseFloat(String(amount));
+    const parsedTenure = parseInt(String(tenureMonths), 10);
+
+    if (parsedAmount <= 0) {
       return NextResponse.json(
-        { error: "Amount and tenure must be positive" },
+        { error: "Amount must be greater than 0" },
+        { status: 400 }
+      );
+    }
+
+    if (parsedTenure <= 0) {
+      return NextResponse.json(
+        { error: "Tenure must be greater than 0 months" },
         { status: 400 }
       );
     }

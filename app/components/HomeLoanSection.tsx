@@ -33,7 +33,7 @@ const homeLoanFeatures = [
 
 export default function HomeLoanSection() {
   return (
-    <div className="overflow-hidden bg-[#edeae7] py-24 sm:py-32">
+    <div className="relative overflow-hidden bg-[#edeae7] pt-24 pb-16 sm:pt-32 sm:pb-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 img-wrap">
           <div className="lg:pr-8 lg:pt-4">

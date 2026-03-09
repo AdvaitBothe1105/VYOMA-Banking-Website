@@ -46,6 +46,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.KYCRegistry__factory>;
     getContractFactory(
+      name: "LoanApprovalRegistry",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.LoanApprovalRegistry__factory>;
+    getContractFactory(
       name: "TxHashStore",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TxHashStore__factory>;
@@ -95,6 +99,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.KYCRegistry>;
     getContractAt(
+      name: "LoanApprovalRegistry",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.LoanApprovalRegistry>;
+    getContractAt(
       name: "TxHashStore",
       address: string | ethers.Addressable,
       signer?: ethers.Signer
@@ -138,6 +147,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.KYCRegistry>;
     deployContract(
+      name: "LoanApprovalRegistry",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LoanApprovalRegistry>;
+    deployContract(
       name: "TxHashStore",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.TxHashStore>;
@@ -186,6 +199,11 @@ declare module "hardhat/types/runtime" {
       args: any[],
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.KYCRegistry>;
+    deployContract(
+      name: "LoanApprovalRegistry",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.LoanApprovalRegistry>;
     deployContract(
       name: "TxHashStore",
       args: any[],

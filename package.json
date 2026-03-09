@@ -8,6 +8,8 @@
     "start": "next start",
     "vercel-build": "node vercel-build.ts && next build",
     "lint": "next lint",
+    "test": "tsx test/integration.test.ts",
+    "test:integration": "tsx test/integration.test.ts",
     "test:setup": "tsx test/setup-test-users.ts",
     "test:utils": "tsx test/example-usage.ts"
   },

@@ -94,7 +94,7 @@ export default function NewsSection() {
   }, []);
 
   return (
-    <section className="font-raleway mx-auto px-10 py-20 bg-white">
+    <section className="relative font-raleway mx-auto px-10 pt-20 pb-32 bg-white">
       <h2 className="text-3xl text-center font-semibold mb-14 items-center gap-2">
          Market Sentiment News
       </h2>
@@ -130,6 +130,12 @@ export default function NewsSection() {
           </div>
         </>
       )}
+      {/* Bottom wave divider */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto" preserveAspectRatio="none">
+          <path d="M0 60L48 55C96 50 192 40 288 35C384 30 480 30 576 33.3C672 36.7 768 43.3 864 45C960 46.7 1056 43.3 1152 40C1248 36.7 1344 33.3 1392 31.7L1440 30V60H1392C1344 60 1248 60 1152 60C1056 60 960 60 864 60C768 60 672 60 576 60C480 60 384 60 288 60C192 60 96 60 48 60H0Z" fill="#edeae7" />
+        </svg>
+      </div>
     </section>
   );
 }

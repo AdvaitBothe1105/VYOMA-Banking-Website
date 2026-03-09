@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useToast } from "@/app/components/toast/ToastContext";
 
 interface Loan {
   id: string;
@@ -25,6 +26,7 @@ interface VotingSummary {
 }
 
 export default function AdminLoansPage() {
+  const { addToast } = useToast();
   const [loans, setLoans] = useState<Loan[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +40,11 @@ export default function AdminLoansPage() {
       if (!res.ok) throw new Error("Failed to fetch loans");
       const data = await res.json();
       setLoans(data.loans || []);
+      addToast("Loans loaded successfully", "success");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      const errorMsg = err instanceof Error ? err.message : "An error occurred";
+      setError(errorMsg);
+      addToast(errorMsg, "error");
     } finally {
       setLoading(false);
     }
@@ -97,11 +102,13 @@ export default function AdminLoansPage() {
 
       const data = await res.json();
       if (!res.ok) {
-        alert(data.error || "Failed to process decision");
+        const errorMsg = data.error || "Failed to process decision";
+        addToast(errorMsg, "error");
         return;
       }
 
-      alert(data.message || "Decision recorded successfully");
+      const successMsg = data.message || "Decision recorded successfully";
+      addToast(successMsg, "success");
       await fetchLoans();
     } catch (err) {
       alert(err instanceof Error ? err.message : "Failed to process decision");
@@ -113,10 +120,15 @@ export default function AdminLoansPage() {
       const res = await fetch(`/api/admin/loans/${loanId}/move-to-voting`, {
         method: "POST",
       });
-      if (!res.ok) throw new Error("Failed to move loan to voting");
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to move loan to voting");
+      }
+      addToast("Loan moved to voting successfully", "success");
       await fetchLoans();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to move loan to voting");
+      const errorMsg = err instanceof Error ? err.message : "Failed to move loan to voting";
+      addToast(errorMsg, "error");
     }
   };
 

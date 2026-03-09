@@ -4,7 +4,7 @@ const Features = () => {
   return (
     <div>
       <div
-        className="bg-[#edeae7] py-24 sm:py-32 features-section"
+        className="relative bg-[#edeae7] pt-24 pb-32 sm:pt-32 sm:pb-40 features-section"
         data-anim-target="feat-sec"
         id="features-section"
       >
@@ -14,19 +14,14 @@ const Features = () => {
             id="feat-sec"
           >
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Features of VYOMA Savings Account!!
+              Why Choose VYOMA?
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Saving money in the VYOMA digital savings account can help you
-              maximize your benefits. VYOMA Bank is India’s first new-age
-              financial company to introduce a no-minimum balance digital
-              savings account. VYOMA digital savings account is available in 2
-              variants, each catering to specific spending habits of customers.
-              With zero-contact and video-KYC benefits, open a VYOMA digital
-              savings account anytime, and from anywhere. Avail the best online
-              banking solutions in just a few clicks. Open an online savings
-              account with us and explore our wide range of offerings now! Take
-              a look.
+              VYOMA combines traditional banking with blockchain technology.
+              Open a digital savings account with online KYC, manage
+              beneficiaries, transfer funds with zero fees, apply for loans
+              governed by community voting, and earn VYO tokens — all from a
+              single secure platform.
             </p>
           </div>
           <div
@@ -37,50 +32,50 @@ const Features = () => {
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16 anim-sing-feat">
               {[
                 {
-                  title: "Hassle-Free Banking",
+                  title: "On-Chain KYC Verification",
                   description:
-                    "Keep a low balance to continue benefiting from the full range of services, stress-free!",
+                    "Submit Aadhaar & PAN online. Once verified, your KYC proof is attested on the blockchain via the KYC Registry smart contract — immutable and tamper-proof.",
                   icon: (
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"
+                      d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
                     />
                   ),
                 },
                 {
-                  title: "Go Digital, Pay Zero!!",
+                  title: "Community-Governed Loans",
                   description:
-                    "Enjoy the convenience of a virtual debit card without any fees!",
+                    "Loan decisions are made by the community. Eligible users with 300+ reputation and verified KYC vote Yes, No, or Abstain on every application.",
                   icon: (
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+                      d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
                     />
                   ),
                 },
                 {
-                  title: "Transfer Money Anytime, Anywhere—No Fees Attached",
+                  title: "Deposits & Investments",
                   description:
-                    "Enjoy seamless transfers via IMPS, NEFT, RTGS, or UPI without any extra charges!",
+                    "Grow your wealth with Fixed Deposits, Recurring Deposits, NPS, DEMAT accounts, and Mutual Funds — all managed from your dashboard.",
                   icon: (
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M15 8.25H9m6 3H9m3 6-3-3h1.5a3 3 0 1 0 0-6M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
                     />
                   ),
                 },
                 {
-                  title: "Effortless Account Management",
+                  title: "Reputation-Based Risk Scoring",
                   description:
-                    "We offer a 24/7 Account Management facility through our website.",
+                    "Your reputation score (starting at 300) evolves with your activity — correct votes earn points, while loan outcomes and participation shape your risk band.",
                   icon: (
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                      d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
                     />
                   ),
                 },
@@ -108,6 +103,12 @@ const Features = () => {
               ))}
             </dl>
           </div>
+        </div>
+        {/* Bottom wave divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto" preserveAspectRatio="none">
+            <path d="M0 60L48 55C96 50 192 40 288 35C384 30 480 30 576 33.3C672 36.7 768 43.3 864 45C960 46.7 1056 43.3 1152 40C1248 36.7 1344 33.3 1392 31.7L1440 30V60H1392C1344 60 1248 60 1152 60C1056 60 960 60 864 60C768 60 672 60 576 60C480 60 384 60 288 60C192 60 96 60 48 60H0Z" fill="#ffffff" />
+          </svg>
         </div>
       </div>
     </div>
