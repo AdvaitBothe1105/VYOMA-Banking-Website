@@ -7,6 +7,7 @@ import ManageBeneficiaries from "./ManageBeneficiaries";
 import FundLimits from "./FundLimits";
 import FundTransfer from "./FundTransfer";
 import RecTransaction from "./RecTransaction";
+import { ArrowLeftRight } from "lucide-react";
 
 type FundPageProps = {
   crn: string;
@@ -24,34 +25,28 @@ export default function FundPage({ crn }: FundPageProps) {
   >("main");
   
   return (
-    <main className="content mx-auto py-16 font-raleway bg-[#3a3a3a] rounded-4xl ">
-      <h1 className="text-4xl font-bold mb-8 text-[#fff] text-center">
-        Fund Transfer
-      </h1>
+    <main className="min-h-screen font-raleway">
+      {/* Page Header */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="p-2.5 bg-[#A47E3B]/10 rounded-xl">
+            <ArrowLeftRight className="w-6 h-6 text-[#A47E3B]" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900">Fund Transfer</h1>
+        </div>
+        <p className="text-sm text-gray-500 ml-14">Send money, manage beneficiaries, and view transactions</p>
+      </div>
 
-      {/* Transfer Options */}
-      <div className="functions max-w-6xl mx-auto p-6 bg-[#FAF5EE] rounded-xl shadow-lg border border-[#D4C8B6]">
+      {/* Content */}
+      <div className="space-y-6">
         {step === "main" && <MainFund onStepChange={setStep} />}
-
-        {/* One Time Transfer Options */}
         {step === "oneTime" && <OneTimeTransferOptions onStepChange={setStep} />}
-
-        {/* Beneficiaries Options */}
         {step === "beneficiaries" && <Beneficiaries onStepChange={setStep} />}
-
-        {/* Add Beneficiary */}
         {step === "addBeneficiary" && <AddBeneficiaries onStepChange={setStep} />}
-
-        {/* Manage Beneficiary */}
         {step === "manageBeneficiary" && <ManageBeneficiaries onStepChange={setStep} />}
-
-        {/* Fund Transfer Limits */}
         {step === "limits" && <FundLimits onStepChange={setStep} />}
-
-        {/* One Time Transfer Form */}
         {step === "transfer" && <FundTransfer crn={crn} onStepChange={setStep} />}
 
-        {/* Recent Transactions */}
         <RecTransaction crn={crn}/>
       </div>
     </main>

@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, ArrowLeft } from "lucide-react";
 
 export default function FundTransferErrorClient() {
   const router = useRouter();
@@ -8,21 +8,20 @@ export default function FundTransferErrorClient() {
   const errorMsg = params.get("msg") || "An unexpected error occurred.";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 px-4">
-      <div className="bg-white shadow-2xl border border-red-300 rounded-2xl p-8 max-w-md w-full text-center animate-fade-in">
-        <div className="flex flex-col items-center space-y-4">
+    <div className="min-h-[70vh] flex items-center justify-center px-4">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-10 max-w-md w-full text-center">
+        <div className="inline-flex p-4 bg-red-50 rounded-full mb-5">
           <AlertTriangle className="h-12 w-12 text-red-500" />
-          <h1 className="text-3xl font-extrabold text-red-600">
-            Transfer Failed
-          </h1>
-          <p className="text-gray-700 text-sm">{errorMsg}</p>
-          <button
-            onClick={() => router.push("/fund")}
-            className="mt-6 px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-full transition duration-300"
-          >
-            Back to Fund Transfer
-          </button>
         </div>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">Transfer Failed</h1>
+        <p className="text-gray-500 text-sm mb-8">{errorMsg}</p>
+        <button
+          onClick={() => router.push("/fund")}
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#A47E3B] text-white text-sm font-semibold hover:bg-[#8c6a2f] transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Fund Transfer
+        </button>
       </div>
     </div>
   );
